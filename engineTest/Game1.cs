@@ -8,7 +8,7 @@ using SylviaEngine.Graphics;
 using SylviaEngine.Input;
 using SylviaEngine.UI.Text.Effects;
 
-namespace dungeonTtest;
+namespace engineTest;
 
 public class Game1 : Game
 {
@@ -47,7 +47,7 @@ public class Game1 : Game
         test.AddComponent(new TextRenderer(RenderLayer.UI, font));
         test.GetComponent<TextRenderer>().Text = "Hello!";
         
-        test2 = _scene.AddGameObject(new GameObject(new Vector2(15,25)));
+        GameObject test2 = _scene.AddGameObject(new GameObject(new Vector2(15,25)));
         AnimatedTextRenderer animTest2 = test2.AddComponent(
             new AnimatedTextRenderer(
                 RenderLayer.UI,
@@ -76,9 +76,15 @@ public class Game1 : Game
         );
         animTest4.Effect = new JitterTextEffect();
             
+        GameObject test5 = _scene.AddGameObject(new GameObject(new Vector2(15,85)));
+        AnimatedTextRenderer animTest5 = test5.AddComponent(
+            new AnimatedTextRenderer(
+                RenderLayer.UI,
+                font,
+                "RainbowWaveTextEffect")
+        );
+        animTest5.Effect = new RainbowWaveTextEffect(2f, 0.5f, 5f, 0.5f, 0.5f, 0.5f);
     }
-
-    private GameObject test2;
     
     protected override void Update(GameTime gameTime)
     {
