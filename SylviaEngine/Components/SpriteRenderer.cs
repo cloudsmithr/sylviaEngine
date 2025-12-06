@@ -27,7 +27,7 @@ public class SpriteRenderer : RenderComponent
             Owner.Transform.Rotation,
             Pivot,
             Owner.Transform.Scale,
-            Effects,
+            SpriteEffects,
             0f
         );
     }

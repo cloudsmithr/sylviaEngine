@@ -14,7 +14,7 @@ public abstract class RenderComponent : IComponent, IRenderable
     public float ZIndex { get; set; }
     public Color Color { get; set; } = Color.White;
     public Vector2 Pivot { get; set; }
-    public SpriteEffects Effects { get; set; } = SpriteEffects.None;
+    public SpriteEffects SpriteEffects { get; set; } = SpriteEffects.None;
 
     
     protected RenderComponent(RenderLayer layer, float zIndex = 0f, bool enabled = true)

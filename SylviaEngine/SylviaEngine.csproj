@@ -13,8 +13,6 @@
     
     <ItemGroup>
       <Folder Include="Audio\" />
-      <Folder Include="UI\Text\" />
-      <Folder Include="Utilities\" />
     </ItemGroup>
 
 </Project>

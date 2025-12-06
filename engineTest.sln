@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dungeonTtest", "dungeonTtest\dungeonTtest.csproj", "{53E980DD-7FFD-4DF4-BCC6-790A35278EC6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "engineTest", "engineTest\engineTest.csproj", "{53E980DD-7FFD-4DF4-BCC6-790A35278EC6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SylviaEngine", "SylviaEngine\SylviaEngine.csproj", "{BC3B2E59-8A87-40C1-A678-54687FF005D7}"
 EndProject

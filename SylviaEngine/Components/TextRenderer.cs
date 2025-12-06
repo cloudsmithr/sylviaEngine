@@ -22,7 +22,7 @@ public class TextRenderer : RenderComponent
     {
         if (string.IsNullOrEmpty(Text) || Owner == null) return;
 
-        Pivot = Font.MeasureString(Text) / 2f;
+        //Pivot = Font.MeasureString(Text) / 2f;
 
         spriteBatch.DrawString(
             Font, 
@@ -32,7 +32,7 @@ public class TextRenderer : RenderComponent
             Owner.Transform.Rotation,
             Pivot,
             Owner.Transform.Scale,
-            Effects,
+            SpriteEffects,
             0f);
     }
 }
