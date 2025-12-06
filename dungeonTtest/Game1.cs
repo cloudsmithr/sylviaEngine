@@ -6,6 +6,7 @@ using SylviaEngine.Components;
 using SylviaEngine.Enums;
 using SylviaEngine.Graphics;
 using SylviaEngine.Input;
+using SylviaEngine.UI.Text.Effects;
 
 namespace dungeonTtest;
 
@@ -47,12 +48,34 @@ public class Game1 : Game
         test.GetComponent<TextRenderer>().Text = "Hello!";
         
         test2 = _scene.AddGameObject(new GameObject(new Vector2(15,25)));
-        AnimatedTextRenderer animTest2 = test2.AddComponent(new AnimatedTextRenderer(RenderLayer.UI, font));
-        animTest2.InputManager = _inputManager;
-        animTest2.SetText("Hello! Welcome to Pokemon! This is going to be a run-on sentence just to see ");
-        animTest2.Effect = TextEffect.TypeWriter;
-        animTest2.TypewriterSpeed = 0.15f;
-        animTest2.ResetTypewriter();
+        AnimatedTextRenderer animTest2 = test2.AddComponent(
+            new AnimatedTextRenderer(
+                RenderLayer.UI,
+                font,
+            "WaveTextEffect",
+                color: Color.Cyan)
+        );
+        animTest2.Effect = new WaveTextEffect();
+        GameObject test3 = _scene.AddGameObject(new GameObject(new Vector2(15,45)));
+        AnimatedTextRenderer animTest3 = test3.AddComponent(
+            new AnimatedTextRenderer(
+                RenderLayer.UI,
+                font,
+                "ShakeTextEffect",
+                color: Color.Yellow)
+        );
+        animTest3.Effect = new ShakeTextEffect();
+        
+        GameObject test4 = _scene.AddGameObject(new GameObject(new Vector2(15,65)));
+        AnimatedTextRenderer animTest4 = test4.AddComponent(
+            new AnimatedTextRenderer(
+                RenderLayer.UI,
+                font,
+                "JitterTextEffect",
+                color: Color.Green)
+        );
+        animTest4.Effect = new JitterTextEffect();
+            
     }
 
     private GameObject test2;
