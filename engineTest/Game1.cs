@@ -45,7 +45,7 @@ public class Game1 : Game
         _scene = new Scene();
         GameObject test = _scene.AddGameObject(new GameObject(new Vector2(15,5)));
         test.AddComponent(new TextRenderer(RenderLayer.UI, font));
-        test.GetComponent<TextRenderer>().Text = "Hello!";
+        test.GetComponent<TextRenderer>().Text = "No Text Effects";
         
         GameObject test2 = _scene.AddGameObject(new GameObject(new Vector2(15,25)));
         AnimatedTextRenderer animTest2 = test2.AddComponent(
@@ -55,7 +55,8 @@ public class Game1 : Game
             "WaveTextEffect",
                 color: Color.Cyan)
         );
-        animTest2.Effect = new WaveTextEffect();
+        animTest2.Effects.Add(new WaveTextEffect());
+
         GameObject test3 = _scene.AddGameObject(new GameObject(new Vector2(15,45)));
         AnimatedTextRenderer animTest3 = test3.AddComponent(
             new AnimatedTextRenderer(
@@ -64,26 +65,50 @@ public class Game1 : Game
                 "ShakeTextEffect",
                 color: Color.Yellow)
         );
-        animTest3.Effect = new ShakeTextEffect();
+        animTest3.Effects.Add(new ShakeTextEffect());
         
         GameObject test4 = _scene.AddGameObject(new GameObject(new Vector2(15,65)));
         AnimatedTextRenderer animTest4 = test4.AddComponent(
             new AnimatedTextRenderer(
                 RenderLayer.UI,
                 font,
-                "JitterTextEffect",
+                "JitterAndShakeTextEffect",
                 color: Color.Green)
         );
-        animTest4.Effect = new JitterTextEffect();
-            
+        animTest4.Effects.Add(new ShakeTextEffect());
+        animTest4.Effects.Add(new JitterTextEffect());
+        animTest4.Effects.Add(new WaveTextEffect());
+        
         GameObject test5 = _scene.AddGameObject(new GameObject(new Vector2(15,85)));
         AnimatedTextRenderer animTest5 = test5.AddComponent(
             new AnimatedTextRenderer(
                 RenderLayer.UI,
                 font,
-                "RainbowWaveTextEffect")
+                "CompositeEffectTextEffect",
+                Color.White)
         );
-        animTest5.Effect = new RainbowWaveTextEffect(2f, 0.5f, 5f, 0.5f, 0.5f, 0.5f);
+        
+        animTest5.Effects.Add(new RainbowTextEffect());
+        animTest5.Effects.Add(new ShakeTextEffect());
+        animTest5.Effects.Add(new JitterTextEffect());
+        animTest5.Effects.Add(new WaveTextEffect());
+        animTest5.Effects.Add(new TypeWriterTextEffect());
+        
+        GameObject test6 = _scene.AddGameObject(new GameObject(new Vector2(-15,115)));
+        AnimatedTextRenderer animTest6 = test6.AddComponent(
+            new AnimatedTextRenderer(
+                RenderLayer.UI,
+                font,
+                "AAAAAAAAAAAAAA HELP MEEEEE AAAAAAAAAA!!!",
+                Color.White)
+        );
+        
+        animTest6.Effects.Add(new RainbowTextEffect(4f, 2f, 2f));
+        animTest6.Effects.Add(new ShakeTextEffect(4f));
+        animTest6.Effects.Add(new JitterTextEffect(4f));
+        animTest6.Effects.Add(new WaveTextEffect());
+        animTest6.Effects.Add(new TypeWriterTextEffect(0.75f));
+
     }
     
     protected override void Update(GameTime gameTime)

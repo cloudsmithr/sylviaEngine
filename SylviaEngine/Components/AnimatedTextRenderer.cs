@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SylviaEngine.Enums;
 using SylviaEngine.Interfaces;
+using SylviaEngine.UI.Text.Effects;
 using IUpdateable = SylviaEngine.Interfaces.IUpdateable;
 
 namespace SylviaEngine.Components;
@@ -12,7 +13,7 @@ public class AnimatedTextRenderer : RenderComponent, IUpdateable
     private string Text { get; set; } = string.Empty;
     public Color Color { get; set; } = Color.White;
     public Vector2 Origin { get; set; }
-    public ITextEffect? Effect { get; set; }
+    public List<ITextEffect> Effects { get; set; } = new List<ITextEffect>();
     public int Width { get; set; }
     public int MaxLines { get; set; }
     
@@ -22,7 +23,8 @@ public class AnimatedTextRenderer : RenderComponent, IUpdateable
     public void Update(GameTime gameTime)
     {
         _time += (float)gameTime.ElapsedGameTime.TotalSeconds;
-        Effect?.Update(gameTime);
+        foreach (ITextEffect effect in Effects)
+            effect.Update(gameTime);
     }
 
     public AnimatedTextRenderer(RenderLayer layer, SpriteFont font, string text, Color color = default, bool enabled = true, float zIndex = 0f) 
@@ -39,10 +41,32 @@ public class AnimatedTextRenderer : RenderComponent, IUpdateable
         if (Font == null || Owner == null || string.IsNullOrEmpty(Text)) return;
         
         Vector2 position = Owner.Transform.Position - Origin;
-        
-        if (Effect != null)
-            Effect.Apply(spriteBatch, Font, Text, position, Color, _time, _random);
-        else
+
+        if (Effects.Count <= 0)
+        {
             spriteBatch.DrawString(Font, Text, position, Color);
+        }
+        else if (Effects.Count == 1)
+        {
+            Effects[0].ApplyToString(spriteBatch, Font, Text, position, Color, _time, _random);
+        }
+        else
+        {
+            for (int i = 0; i < Text.Length; i++)
+            {
+                Vector2 charPos = position;
+                Color charColor = Color;
+                string c = Text[i].ToString();
+                
+                foreach (ITextEffect effect in Effects)
+                {
+                    (charPos, charColor) = effect.ApplyToCharacter(charPos, i, charColor, _time, _random);
+                }
+                if (charColor.A > 0)
+                    spriteBatch.DrawString(Font, c, charPos, charColor);
+                
+                position.X += Font.MeasureString(c).X;
+            }
+        }
     }
 }

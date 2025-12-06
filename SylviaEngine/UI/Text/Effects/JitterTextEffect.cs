@@ -7,7 +7,6 @@ namespace SylviaEngine.UI.Text.Effects;
 public class JitterTextEffect : ITextEffect
 {
     public float JitterStrength { get; set; } = 1;
-    private Random _random = new Random();
  
     public JitterTextEffect(){}
 
@@ -18,7 +17,7 @@ public class JitterTextEffect : ITextEffect
         JitterStrength = jitterStrength;
     }
 
-    public void Apply(SpriteBatch spriteBatch, SpriteFont font, string text, 
+    public void ApplyToString(SpriteBatch spriteBatch, SpriteFont font, string text, 
         Vector2 position, Color baseColor, float time, Random random)
     {
         Vector2 currentPos = position;
@@ -29,9 +28,7 @@ public class JitterTextEffect : ITextEffect
             string character = c.ToString();
 
             // Random jitter for each character
-            float jitterX = ((float)_random.NextDouble() - 0.5f) * 2f * JitterStrength;
-            float jitterY = ((float)_random.NextDouble() - 0.5f) * 2f * JitterStrength;
-            Vector2 charPos = currentPos + new Vector2(jitterX, jitterY);
+            (Vector2 charPos, Color charColor) = ApplyToCharacter(currentPos, i, baseColor, time, random);
 
             spriteBatch.DrawString(font, character, charPos, baseColor);
 
@@ -39,5 +36,12 @@ public class JitterTextEffect : ITextEffect
             currentPos.X += font.MeasureString(character).X;
         }
     }
-    
+
+    public (Vector2 newPosition, Color newColor) ApplyToCharacter(Vector2 position, int characterIndex, Color baseColor, float time, Random random)
+    {
+        float jitterX = ((float)random.NextDouble() - 0.5f) * 2f * JitterStrength;
+        float jitterY = ((float)random.NextDouble() - 0.5f) * 2f * JitterStrength;
+
+        return (position + new Vector2(jitterX, jitterY), baseColor);
+    }
 }

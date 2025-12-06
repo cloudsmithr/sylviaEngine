@@ -23,20 +23,25 @@ public class WaveTextEffect : ITextEffect
     
     public void Update(GameTime gameTime) { }
 
-    public void Apply(SpriteBatch spriteBatch, SpriteFont font, string text, 
+    public void ApplyToString(SpriteBatch spriteBatch, SpriteFont font, string text, 
         Vector2 position, Color baseColor, float time, Random random)
     {
         Vector2 currentPos = position;
         for (int i = 0; i < text.Length; i++)
         {
             string character = text[i].ToString();
+            (Vector2 charPos, Color newColor) = ApplyToCharacter(currentPos, i, baseColor, time, random);
             
-            // We subtract i*Frequency to make the wave move from left to right. Set Speed to a negative number to make it move from right to left.
-            float offset = (float)Math.Sin(time * Speed - i * Frequency) * Amplitude;
-            
-            Vector2 charPos = currentPos + new Vector2(0, offset);
-            spriteBatch.DrawString(font, character, charPos, baseColor);
+            spriteBatch.DrawString(font, character, charPos, newColor);
             currentPos.X += font.MeasureString(character).X;
         }
+    }
+    
+    public (Vector2 newPosition, Color newColor) ApplyToCharacter(Vector2 position, int characterIndex, Color baseColor, float time, Random random)
+    {
+        // We subtract i*Frequency to make the wave move from left to right. Set Speed to a negative number to make it move from right to left.
+        float offset = (float)Math.Sin(time * Speed - characterIndex * Frequency) * Amplitude;
+            
+        return (position + new Vector2(0, offset), baseColor);
     }
 }

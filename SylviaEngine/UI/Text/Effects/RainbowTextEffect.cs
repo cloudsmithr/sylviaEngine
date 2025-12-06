@@ -23,7 +23,7 @@ public class RainbowTextEffect : ITextEffect
     
     public void Update(GameTime gameTime) { }
 
-    public void Apply(SpriteBatch spriteBatch, SpriteFont font, string text, 
+    public void ApplyToString(SpriteBatch spriteBatch, SpriteFont font, string text, 
         Vector2 position, Color baseColor, float time, Random random)
     {
         Vector2 currentPos = position;
@@ -34,12 +34,17 @@ public class RainbowTextEffect : ITextEffect
             string character = c.ToString();
 
             // Calculate rainbow color
-            float hue = (time * ColorCycleSpeed - i * 0.1f) % 1f;
-            Color charColor = ColorUtils.HSVToRGB(hue, SaturationStrength, ValueStrength);
-
+            (Vector2 charPos, Color charColor) = ApplyToCharacter(currentPos, i, baseColor, time, random);
             spriteBatch.DrawString(font, character, currentPos, charColor);
 
             currentPos.X += font.MeasureString(character).X;
         }
+    }
+
+    public (Vector2 newPosition, Color newColor) ApplyToCharacter(Vector2 position, int characterIndex, Color baseColor, float time, Random random)
+    {
+        float hue = (time * ColorCycleSpeed - characterIndex * 0.1f) % 1f;
+        Color charColor = ColorUtils.HSVToRGB(hue, SaturationStrength, ValueStrength);
+        return (position, charColor);
     }
 }
