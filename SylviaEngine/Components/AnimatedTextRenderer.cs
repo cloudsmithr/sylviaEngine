@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SylviaEngine.Enums;
 using SylviaEngine.Interfaces;
-using SylviaEngine.UI.Text.Effects;
 using IUpdateable = SylviaEngine.Interfaces.IUpdateable;
 
 namespace SylviaEngine.Components;
@@ -12,7 +11,6 @@ public class AnimatedTextRenderer : RenderComponent, IUpdateable
     public SpriteFont Font { get; set; }
     private string Text { get; set; } = string.Empty;
     public Color Color { get; set; } = Color.White;
-    public Vector2 Origin { get; set; }
     public List<ITextEffect> Effects { get; set; } = new List<ITextEffect>();
 
     private float _time = 0f;
@@ -38,7 +36,7 @@ public class AnimatedTextRenderer : RenderComponent, IUpdateable
     {
         if (Font == null || Owner == null || string.IsNullOrEmpty(Text)) return;
         
-        Vector2 position = Owner.Transform.Position - Origin;
+        Vector2 position = Owner.Transform.Position - Pivot;
 
         if (Effects.Count <= 0)
         {
@@ -68,5 +66,13 @@ public class AnimatedTextRenderer : RenderComponent, IUpdateable
         }
     }
     
+    public void SetPivotToCenter()
+    {
+        if (Font != null && !string.IsNullOrEmpty(Text))
+        {
+            Vector2 textSize = Font.MeasureString(Text);
+            Pivot = textSize / 2f;
+        }
+    }
 
 }

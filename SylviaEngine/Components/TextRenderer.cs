@@ -35,4 +35,13 @@ public class TextRenderer : RenderComponent
             SpriteEffects,
             0f);
     }
+    
+    public void SetPivotToCenter()
+    {
+        if (Font != null && !string.IsNullOrEmpty(Text))
+        {
+            Vector2 textSize = Font.MeasureString(Text);
+            Pivot = textSize / 2f;
+        }
+    }
 }

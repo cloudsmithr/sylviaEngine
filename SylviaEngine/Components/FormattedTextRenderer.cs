@@ -62,6 +62,8 @@ public class FormattedTextRenderer : AnimatedTextRenderer, IUpdateable
         }
     }
     
+    public bool IsDoneRendering() => _startingLineIndex > _maxLines;
+    
     public FormattedTextRenderer(RenderLayer layer, SpriteFont font, string text, Color color = default, bool enabled = true, float zIndex = 0f, int width = 0, int yPadding = 0, int maxLines = 0)
         : base(layer, font, text, color, enabled, zIndex)
     {
@@ -79,7 +81,7 @@ public class FormattedTextRenderer : AnimatedTextRenderer, IUpdateable
     {
         if (Font == null || Owner == null || string.IsNullOrEmpty(Text)) return;
         
-        Vector2 position = Owner.Transform.Position - Origin;
+        Vector2 position = Owner.Transform.Position - Pivot;
 
         if (Effects.Count <= 0)
         {
@@ -128,7 +130,6 @@ public class FormattedTextRenderer : AnimatedTextRenderer, IUpdateable
                 position.Y += Font.MeasureString(textLine).Y + _yPadding;
             }
         }
-        
     }
     
     private void SetText(string text)
