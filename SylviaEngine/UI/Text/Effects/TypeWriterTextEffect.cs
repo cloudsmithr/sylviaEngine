@@ -9,6 +9,8 @@ public class TypeWriterTextEffect : ITextEffect
 {
     public float TypewriterSpeed { get; set; } = 0.2f;  // Seconds per character
 
+    public bool IgnoreSpeed { get; set; } = false;
+    
     private int _visibleCharacters = 0;
     private float _typewriterTimer = 0f;
     private string _text = "";
@@ -29,14 +31,26 @@ public class TypeWriterTextEffect : ITextEffect
         if (_visibleCharacters < _text.Length || _text.Length == 0)
         {
             _typewriterTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (_typewriterTimer >= TypewriterSpeed)
+            if (_typewriterTimer >= TypewriterSpeed || IgnoreSpeed)
             {
                 _typewriterTimer = 0f;
                 _visibleCharacters++;
             }
         }
     }
+
+    public void Reset()
+    {
+        _typewriterTimer = 0;
+        _visibleCharacters = 0;
+    }
+
     
+    public bool IsDoneRendering(int totalCharacters)
+    {
+        return _visibleCharacters >= totalCharacters;
+    }
+
     public void ApplyToString(SpriteBatch spriteBatch, SpriteFont font, string text, 
         Vector2 position, Color baseColor, float time, Random random)
     {

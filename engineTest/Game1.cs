@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SylviaEngine;
 using SylviaEngine.Components;
@@ -43,72 +42,21 @@ public class Game1 : Game
     {
         font = Content.Load<SpriteFont>("Fonts/main");
         _scene = new Scene();
-        GameObject test = _scene.AddGameObject(new GameObject(new Vector2(15,5)));
-        test.AddComponent(new TextRenderer(RenderLayer.UI, font));
-        test.GetComponent<TextRenderer>().Text = "No Text Effects";
         
-        GameObject test2 = _scene.AddGameObject(new GameObject(new Vector2(15,25)));
-        AnimatedTextRenderer animTest2 = test2.AddComponent(
-            new AnimatedTextRenderer(
+        GameObject test6 = _scene.AddGameObject(new GameObject(new Vector2(15,5)));
+        FormattedTextRenderer animTest6 = test6.AddComponent(
+            new FormattedTextRenderer(
                 RenderLayer.UI,
                 font,
-            "WaveTextEffect",
-                color: Color.Cyan)
+                "In the first age, the sun fell from the sky. \nIt was devoured by the Bergdrache, the unholy creation of the mountain ranges of the North.",
+                Color.White,
+                width: 200,
+                maxLines:2)
         );
-        animTest2.Effects.Add(new WaveTextEffect());
-
-        GameObject test3 = _scene.AddGameObject(new GameObject(new Vector2(15,45)));
-        AnimatedTextRenderer animTest3 = test3.AddComponent(
-            new AnimatedTextRenderer(
-                RenderLayer.UI,
-                font,
-                "ShakeTextEffect",
-                color: Color.Yellow)
-        );
-        animTest3.Effects.Add(new ShakeTextEffect());
-        
-        GameObject test4 = _scene.AddGameObject(new GameObject(new Vector2(15,65)));
-        AnimatedTextRenderer animTest4 = test4.AddComponent(
-            new AnimatedTextRenderer(
-                RenderLayer.UI,
-                font,
-                "JitterAndShakeTextEffect",
-                color: Color.Green)
-        );
-        animTest4.Effects.Add(new ShakeTextEffect());
-        animTest4.Effects.Add(new JitterTextEffect());
-        animTest4.Effects.Add(new WaveTextEffect());
-        
-        GameObject test5 = _scene.AddGameObject(new GameObject(new Vector2(15,85)));
-        AnimatedTextRenderer animTest5 = test5.AddComponent(
-            new AnimatedTextRenderer(
-                RenderLayer.UI,
-                font,
-                "CompositeEffectTextEffect",
-                Color.White)
-        );
-        
-        animTest5.Effects.Add(new RainbowTextEffect());
-        animTest5.Effects.Add(new ShakeTextEffect());
-        animTest5.Effects.Add(new JitterTextEffect());
-        animTest5.Effects.Add(new WaveTextEffect());
-        animTest5.Effects.Add(new TypeWriterTextEffect());
-        
-        GameObject test6 = _scene.AddGameObject(new GameObject(new Vector2(-15,115)));
-        AnimatedTextRenderer animTest6 = test6.AddComponent(
-            new AnimatedTextRenderer(
-                RenderLayer.UI,
-                font,
-                "AAAAAAAAAAAAAA HELP MEEEEE AAAAAAAAAA!!!",
-                Color.White)
-        );
-        
-        animTest6.Effects.Add(new RainbowTextEffect(4f, 2f, 2f));
-        animTest6.Effects.Add(new ShakeTextEffect(4f));
-        animTest6.Effects.Add(new JitterTextEffect(4f));
-        animTest6.Effects.Add(new WaveTextEffect());
-        animTest6.Effects.Add(new TypeWriterTextEffect(0.75f));
-
+        animTest6.InputManager = _inputManager;
+        animTest6.Effects.Add(new RainbowTextEffect(2f, 0.5f, 0.5f));
+        animTest6.Effects.Add(new ShakeTextEffect(0.55f));
+        animTest6.Effects.Add(new TypeWriterTextEffect(0.5f));
     }
     
     protected override void Update(GameTime gameTime)
@@ -119,14 +67,12 @@ public class Game1 : Game
             Exit();
 
         _scene.Update(gameTime);
-        
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
         WindowManager.Instance.DrawWindow();
-        _scene.Update(gameTime);
         base.Draw(gameTime);
     }
 }

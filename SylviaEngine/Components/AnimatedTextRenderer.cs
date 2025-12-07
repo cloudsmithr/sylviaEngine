@@ -14,9 +14,7 @@ public class AnimatedTextRenderer : RenderComponent, IUpdateable
     public Color Color { get; set; } = Color.White;
     public Vector2 Origin { get; set; }
     public List<ITextEffect> Effects { get; set; } = new List<ITextEffect>();
-    public int Width { get; set; }
-    public int MaxLines { get; set; }
-    
+
     private float _time = 0f;
     private Random _random = new Random();
 
@@ -69,4 +67,6 @@ public class AnimatedTextRenderer : RenderComponent, IUpdateable
             }
         }
     }
+    
+
 }
