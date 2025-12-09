@@ -14,7 +14,7 @@ public class Game1 : Core
     private SpriteFont font;
     private Scene _scene;
     
-    public Game1(): base("TestDungeon", 240, 135, false, 8)
+    public Game1(): base("TestDungeon", 240, 135, true, 8)
     {
     }
 
