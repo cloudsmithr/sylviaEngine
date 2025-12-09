@@ -9,33 +9,13 @@ using SylviaEngine.UI.Text.Effects;
 
 namespace engineTest;
 
-public class Game1 : Game
+public class Game1 : Core
 {
-    private const int INTERNAL_WIDTH = 240; //480;
-    private const int INTERNAL_HEIGHT = 135; //270;
-    private int WINDOW_SCALE = 8;
-    private GraphicsDeviceManager _graphics;
-    private IInputManager _inputManager;
     private SpriteFont font;
     private Scene _scene;
     
-    public Game1()
+    public Game1(): base("TestDungeon", 240, 135, false, 8)
     {
-        _graphics = new GraphicsDeviceManager(this);
-        _inputManager = new InputManager(new InputMappingConfig());
-        Content.RootDirectory = "Content";
-        IsMouseVisible = true;
-    }
-
-    protected override void Initialize()
-    {
-        WindowManager.Instance.Init(
-            GraphicsDevice,
-            _graphics,
-            INTERNAL_WIDTH,
-            INTERNAL_HEIGHT,
-            WINDOW_SCALE);
-        base.Initialize();
     }
 
     protected override void LoadContent()
@@ -53,17 +33,17 @@ public class Game1 : Game
                 width: 200,
                 maxLines:2)
         );
-        animTest6.InputManager = _inputManager;
         animTest6.Effects.Add(new RainbowTextEffect(2f, 0.5f, 0.5f));
         animTest6.Effects.Add(new ShakeTextEffect(0.55f));
         animTest6.Effects.Add(new TypeWriterTextEffect(0.5f));
+
     }
     
     protected override void Update(GameTime gameTime)
     {
-        _inputManager.Update();
+        Input.Update();
 
-        if (_inputManager.InputReleased(InputAction.Menu))
+        if (Input.InputReleased(InputAction.Menu))
             Exit();
 
         _scene.Update(gameTime);
