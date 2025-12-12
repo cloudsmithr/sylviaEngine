@@ -12,29 +12,20 @@ namespace SylviaEngine.Components;
 public class FormattedTextRenderer : AnimatedTextRenderer, IUpdateable
 {
     public int Width { get; set; }
-    public IInputManager InputManager { get; set; }
     private string Text { get; set; }
     private List<string> textLines { get; set; } = new List<string>();
     
     private float _time = 0f;
     private Random _random = new Random();
     private int _yPadding = 0;
-    private bool _waitingInput = false;
     private int _startingLineIndex = 0;
     public int _maxLines = 0;
 
     public void Update(GameTime gameTime)
     {
-        Console.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] FormattedTextRenderer.Update() - Instance: {GetHashCode()}");
-        
         _time += (float)gameTime.ElapsedGameTime.TotalSeconds;
-        bool affirmPressed = InputManager.InputPressed(InputAction.Affirm);
-        bool affirmReleased = InputManager.InputReleased(InputAction.Affirm);
-        
-        if (affirmPressed)
-        {
-            Console.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] Affirm pressed detected");
-        }
+        bool affirmPressed = Core.Input.InputPressed(InputAction.Affirm);
+        bool affirmReleased = Core.Input.InputReleased(InputAction.Affirm);
         
         foreach (ITextEffect effect in Effects)
         {

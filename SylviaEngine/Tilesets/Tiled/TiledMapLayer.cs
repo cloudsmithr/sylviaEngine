@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace SylviaEngine.Tilesets;
+namespace SylviaEngine.Tilesets.Tiled;
 
 public class TiledMapLayer
 {

@@ -10,7 +10,6 @@ public class AnimatedTextRenderer : RenderComponent, IUpdateable
 {
     public SpriteFont Font { get; set; }
     private string Text { get; set; } = string.Empty;
-    public Color Color { get; set; } = Color.White;
     public List<ITextEffect> Effects { get; set; } = new List<ITextEffect>();
 
     private float _time = 0f;

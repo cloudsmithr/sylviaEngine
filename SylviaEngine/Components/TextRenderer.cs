@@ -7,8 +7,6 @@ namespace SylviaEngine.Components;
 public class TextRenderer : RenderComponent
 {
     public SpriteFont Font;
-    public Color Color { get; set; } = Color.White;
-    public Vector2 Pivot { get; set; }
     public string Text { get; set; }
     
     public TextRenderer(RenderLayer layer, SpriteFont font, string text = "", float zIndex = 0f) 
