@@ -10,11 +10,15 @@ public class Core : Game
 {
     internal static Core s_instance;
     public static Core Instance => s_instance;
+    
+    // Monogame objects
     public static GraphicsDeviceManager Graphics { get; private set; }
     public static new GraphicsDevice GraphicsDevice { get; private set; }
     public static new ContentManager Content { get; private set; }
+    
+    // Sylvia Engine objects
     public static IInputManager Input { get; private set; }
-
+    
     private string _title;
     private int _width;
     private int _height;
@@ -53,6 +57,7 @@ public class Core : Game
     protected override void Initialize()
     {
         Input = new InputManager(new InputMappingConfig(), PlayerIndex.One);
+        
         Window.Title = _title;
         GraphicsDevice = base.GraphicsDevice;
 

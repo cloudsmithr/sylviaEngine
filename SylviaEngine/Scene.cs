@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using SylviaEngine.Graphics;
 
 namespace SylviaEngine;
 
@@ -7,12 +8,14 @@ public class Scene : IDisposable
 {
     protected ContentManager Content { get; }
     public bool IsDisposed { get; private set; }
+    public ITileMapManager TileMap { get; private set; }
     private List<GameObject> _gameObjects { get; set; } = new();
 
     public Scene()
     {
         Content = new ContentManager(Core.Content.ServiceProvider);
-        Content.RootDirectory = Core.Content.RootDirectory;        
+        Content.RootDirectory = Core.Content.RootDirectory;
+        TileMap = new TileMapManager(Content);
     }
     
     public GameObject AddGameObject(GameObject gameObject)

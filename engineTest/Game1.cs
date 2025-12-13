@@ -5,6 +5,7 @@ using SylviaEngine.Components;
 using SylviaEngine.Enums;
 using SylviaEngine.Graphics;
 using SylviaEngine.Input;
+using SylviaEngine.Tilesets.Tiled;
 using SylviaEngine.UI.Text.Effects;
 
 namespace engineTest;
@@ -36,7 +37,8 @@ public class Game1 : Core
         animTest6.Effects.Add(new RainbowTextEffect(2f, 0.5f, 0.5f));
         animTest6.Effects.Add(new ShakeTextEffect(0.55f));
         animTest6.Effects.Add(new TypeWriterTextEffect(0.5f));
-
+        
+        _scene.TileMap.LoadMap<TiledMap>("TileMaps/tilemapTest.json");
     }
     
     protected override void Update(GameTime gameTime)
