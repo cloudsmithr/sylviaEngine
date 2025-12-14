@@ -45,7 +45,7 @@ public class TiledMap : ITileMap
     public int TileWidth { get; set; }
     
     [JsonPropertyName("tilesets")]
-    public List<Tileset> Tilesets { get; set; }
+    public List<TiledMapTileSet> Tilesets { get; set; }
     
     [JsonPropertyName("type")]
     public string Type { get; set; }

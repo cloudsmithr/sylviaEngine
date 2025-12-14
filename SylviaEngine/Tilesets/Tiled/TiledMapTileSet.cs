@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace SylviaEngine.Tilesets.Tiled;
 
-public class Tileset
+public class TiledMapTileSet
 {
     [JsonPropertyName("firstgid")]
     public int FirstGid { get; set; }
