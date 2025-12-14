@@ -20,8 +20,8 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/main.spritefont
 
-#begin TileMaps/tilesetTest.json
-/copy:TileMaps/tilesetTest.json;TileMaps/tilemapTest.json
+#begin TileMaps/tilemapTest.json
+/copy:TileMaps/tilemapTest.json;TileMaps/tilemapTest.json
 
 #begin TileSets/testTileset.png
 /importer:TextureImporter
