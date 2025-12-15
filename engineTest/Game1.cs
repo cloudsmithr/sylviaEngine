@@ -23,7 +23,8 @@ public class Game1 : Core
     {
         font = Content.Load<SpriteFont>("Fonts/main");
         _scene = new Scene();
-        
+        _scene.LoadContent(LevelPaths.TestLevel);
+
         GameObject test6 = _scene.AddGameObject(new GameObject(new Vector2(15,35)));
         FormattedTextRenderer animTest6 = test6.AddComponent(
             new FormattedTextRenderer(
@@ -38,7 +39,6 @@ public class Game1 : Core
         animTest6.Effects.Add(new WaveTextEffect(1f, 1f, 1f));
         animTest6.Effects.Add(new TypeWriterTextEffect(0.1f));
         
-        _scene.LoadContent(LevelPaths.TestLevel);
     }
     
     protected override void Update(GameTime gameTime)
