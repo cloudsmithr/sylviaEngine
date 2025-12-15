@@ -58,8 +58,8 @@ public class WindowManager : IWindowManager
 
         if (Fullscreen)
             RenderSystem.Instance.RenderToWindow(
-                RenderWidth * (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / RenderWidth), 
-                RenderHeight * (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / RenderHeight),
+                GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, 
+                GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height,
                 Color.White);
         else
             RenderSystem.Instance.RenderToWindow(RenderWidth * Scale, RenderHeight * Scale, Color.White);

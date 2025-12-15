@@ -1,6 +1,10 @@
 namespace SylviaEngine.Levels;
 
-public class LevelTransitionEffect
+public enum LevelTransitionEffect
 {
-    
+    None,
+    Fade,
+    Dissolve,
+    Wipe,
+    Pixelate
 }

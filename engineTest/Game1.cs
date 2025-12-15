@@ -24,18 +24,18 @@ public class Game1 : Core
         font = Content.Load<SpriteFont>("Fonts/main");
         _scene = new Scene();
         
-        GameObject test6 = _scene.AddGameObject(new GameObject(new Vector2(15,5)));
+        GameObject test6 = _scene.AddGameObject(new GameObject(new Vector2(15,35)));
         FormattedTextRenderer animTest6 = test6.AddComponent(
             new FormattedTextRenderer(
                 RenderLayer.UI,
                 font,
-                "In the first age, the sun fell from the sky. \nIt was devoured by the Bergdrache, the unholy creation of the mountain ranges of the North.",
+                "In the first age, the sun fell from the sky. \nThe Lord of Demons devoured it, casting the world into darkness. \n Humankind was before the brink of destruction. \nUntil... \n The Hero of Light appeared, to slay the Lord of Demons, and free the land from his reign of darkness.",
                 Color.Red,
                 width: 200,
                 maxLines:2)
         );
-        animTest6.Effects.Add(new RainbowTextEffect(3f, 0.5f, 1f));
-        animTest6.Effects.Add(new JitterTextEffect(6f));
+        animTest6.Effects.Add(new JitterTextEffect(0.5f));
+        animTest6.Effects.Add(new WaveTextEffect(1f, 1f, 1f));
         animTest6.Effects.Add(new TypeWriterTextEffect(0.1f));
         
         _scene.LoadContent(LevelPaths.TestLevel);

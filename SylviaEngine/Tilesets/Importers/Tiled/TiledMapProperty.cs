@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace SylviaEngine.Tilesets.Tiled.Importer;
+namespace SylviaEngine.Tilesets.Importers.Tiled;
 
 public class TiledMapProperty
 {

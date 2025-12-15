@@ -1,6 +1,10 @@
+using System.Text.Json;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using SylviaEngine.Graphics;
+using SylviaEngine.Levels;
+using SylviaEngine.Tilesets;
+using SylviaEngine.Tilesets.Importers.Tiled;
 
 namespace SylviaEngine;
 
@@ -8,14 +12,15 @@ public class Scene : IDisposable
 {
     protected ContentManager Content { get; }
     public bool IsDisposed { get; private set; }
-    public ITileMapManager TileMap { get; private set; }
-    private List<GameObject> _gameObjects { get; set; } = new();
+    public Level Level { get; private set; }
 
+    public bool IsLoaded { get; private set; } = false;
+    private List<GameObject> _gameObjects { get; set; } = new();
+    
     public Scene()
     {
         Content = new ContentManager(Core.Content.ServiceProvider);
         Content.RootDirectory = Core.Content.RootDirectory;
-        TileMap = new TileMapManager(Content);
     }
     
     public GameObject AddGameObject(GameObject gameObject)
@@ -39,11 +44,32 @@ public class Scene : IDisposable
     }
     
     ~Scene() => Dispose(false);
-    
+
     /// <summary>
     /// Override to provide logic to load content for the scene.
     /// </summary>
-    public virtual void LoadContent() { }
+    public virtual void LoadContent(string levelPath)
+    {
+        if (IsLoaded)
+        {
+            return;
+        }
+        string json = File.ReadAllText("Content/" + levelPath);
+        Level = JsonSerializer.Deserialize<Level>(json) ?? throw new FileLoadException("Could not load level");
+        
+        GameObject map = new GameObject();
+        TiledMapImporter importer = new TiledMapImporter();
+        
+        importer.LoadMap(Level.TileMapPath, Content);
+        map.AddComponent<TileMapRenderer>(new TileMapRenderer(
+                importer.ImportedMap.ToArray(),
+                0
+            ));
+        
+        //_gameObjects.AddRange(importer.ImportedObjects);
+        
+        IsLoaded = true;
+    }
 
     /// <summary>
     /// Unloads scene-specific content.
