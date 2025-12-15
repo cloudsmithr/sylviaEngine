@@ -135,7 +135,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/TileSets/testTileset.tsx"
+         "source":"/TileSets/testTileset.tsx"
         }],
  "tilewidth":8,
  "type":"map",

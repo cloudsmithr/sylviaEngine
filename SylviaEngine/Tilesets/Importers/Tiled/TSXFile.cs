@@ -1,6 +1,6 @@
 using System.Xml.Serialization;
 
-namespace SylviaEngine.Tilesets.Tiled;
+namespace SylviaEngine.Tilesets.Importers.Tiled;
 
 [XmlRoot("tileset")]
 public class TSXFile

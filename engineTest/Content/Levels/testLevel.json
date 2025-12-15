@@ -1,0 +1,6 @@
+{
+  "name": "TestLevel",
+  "tileMapPath": "TileMaps/tilemapTest.json",
+  "backgroundMusic": "",
+  "TransitionEffect": "None"
+}

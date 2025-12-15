@@ -1,10 +1,7 @@
 using System.Text.Json.Serialization;
-using Microsoft.Xna.Framework.Graphics;
-using SylviaEngine.Components;
-using SylviaEngine.Enums;
 using SylviaEngine.Interfaces;
 
-namespace SylviaEngine.Tilesets.Tiled;
+namespace SylviaEngine.Tilesets.Importers.Tiled;
 
 public class TiledMap : ITileMap
 {

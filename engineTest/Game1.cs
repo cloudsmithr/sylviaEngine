@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using engineTest.Levels;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SylviaEngine;
 using SylviaEngine.Components;
 using SylviaEngine.Enums;
 using SylviaEngine.Graphics;
 using SylviaEngine.Input;
-using SylviaEngine.Tilesets.Tiled;
 using SylviaEngine.UI.Text.Effects;
 
 namespace engineTest;
@@ -15,7 +15,7 @@ public class Game1 : Core
     private SpriteFont font;
     private Scene _scene;
     
-    public Game1(): base("TestDungeon", 240, 135, true, 8)
+    public Game1(): base("TestDungeon", 240, 135, false, 8)
     {
     }
 
@@ -30,15 +30,15 @@ public class Game1 : Core
                 RenderLayer.UI,
                 font,
                 "In the first age, the sun fell from the sky. \nIt was devoured by the Bergdrache, the unholy creation of the mountain ranges of the North.",
-                Color.White,
+                Color.Red,
                 width: 200,
                 maxLines:2)
         );
-        animTest6.Effects.Add(new RainbowTextEffect(2f, 0.5f, 0.5f));
-        animTest6.Effects.Add(new ShakeTextEffect(0.55f));
-        animTest6.Effects.Add(new TypeWriterTextEffect(0.5f));
+        animTest6.Effects.Add(new RainbowTextEffect(3f, 0.5f, 1f));
+        animTest6.Effects.Add(new JitterTextEffect(6f));
+        animTest6.Effects.Add(new TypeWriterTextEffect(0.1f));
         
-        _scene.TileMap.LoadMap<TiledMap>("TileMaps/tilemapTest.json");
+        _scene.LoadContent(LevelPaths.TestLevel);
     }
     
     protected override void Update(GameTime gameTime)
