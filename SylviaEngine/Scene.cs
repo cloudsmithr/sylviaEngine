@@ -1,7 +1,6 @@
 using System.Text.Json;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using SylviaEngine.Graphics;
 using SylviaEngine.Levels;
 using SylviaEngine.Tilesets;
 using SylviaEngine.Tilesets.Importers.Tiled;
@@ -12,10 +11,9 @@ public class Scene : IDisposable
 {
     protected ContentManager Content { get; }
     public bool IsDisposed { get; private set; }
-    public Level Level { get; private set; }
-
-    public bool IsLoaded { get; private set; } = false;
-    private List<GameObject> _gameObjects { get; set; } = new();
+    public Level? Level { get; private set; }
+    
+    private List<GameObject> _gameObjects = new();
     
     public Scene()
     {
@@ -42,72 +40,68 @@ public class Scene : IDisposable
                 gameObject.Update(gameTime);
         }
     }
-    
-    ~Scene() => Dispose(false);
 
-    /// <summary>
-    /// Override to provide logic to load content for the scene.
-    /// </summary>
     public virtual void LoadContent(string levelPath)
     {
-        if (IsLoaded)
-        {
-            return;
-        }
-        string json = File.ReadAllText("Content/" + levelPath);
-        Level = JsonSerializer.Deserialize<Level>(json) ?? throw new FileLoadException("Could not load level");
+        // Clear previous level
+        UnloadContent();
         
-        GameObject map = new GameObject();
-        TiledMapImporter importer = new TiledMapImporter();
+        // Load level config
+        Level = LoadLevel(levelPath);
         
-        importer.LoadMap(Level.TileMapPath, Content);
-        map.AddComponent<TileMapRenderer>(new TileMapRenderer(
-                importer.ImportedMap.ToArray(),
-                0
-            ));
+        // Create tilemap GameObject
+        var mapObject = CreateTileMapObject(Level.TileMapPath);
+        AddGameObject(mapObject); // ✅ Don't forget this!
+    }
+    
+    private Level LoadLevel(string levelPath)
+    {
+        string fullPath = Path.Combine(Content.RootDirectory, levelPath);
+        string json = File.ReadAllText(fullPath);
+        return JsonSerializer.Deserialize<Level>(json) 
+            ?? throw new FileLoadException($"Could not load level: {levelPath}");
+    }
+    
+    private GameObject CreateTileMapObject(string tileMapPath)
+    {
+        var importer = new TiledMapImporter();
+        importer.LoadMap(tileMapPath, Content);
         
-        //_gameObjects.AddRange(importer.ImportedObjects);
-        
-        IsLoaded = true;
+        var mapObject = new GameObject();
+        mapObject.AddComponent(new TileMapRenderer(importer.ImportedMap.ToArray(), 0));
+        return mapObject;
     }
 
-    /// <summary>
-    /// Unloads scene-specific content.
-    /// </summary>
     public virtual void UnloadContent()
     {
+        // Dispose in reverse order for possible dependency chains
+        for (int i = _gameObjects.Count - 1; i >= 0; i--)
+        {
+            _gameObjects[i].Dispose();
+        }
+        
+        _gameObjects.Clear();
         Content.Unload();
     }
     
-    /// <summary>
-    /// Disposes of this scene.
-    /// </summary>
     public void Dispose()
     {
         Dispose(true);
         GC.SuppressFinalize(this);
     }
 
-    /// <summary>
-    /// Disposes of this scene.
-    /// </summary>
-    /// <param name="disposing">'
-    /// Indicates whether managed resources should be disposed.  This value is only true when called from the main
-    /// Dispose method.  When called from the finalizer, this will be false.
-    /// </param>
     protected virtual void Dispose(bool disposing)
     {
-        if (IsDisposed)
-        {
-            return;
-        }
+        if (IsDisposed) return;
 
         if (disposing)
         {
             UnloadContent();
             Content.Dispose();
         }
-        IsDisposed = true; 
+        
+        IsDisposed = true;
     }
     
+    ~Scene() => Dispose(false);
 }

@@ -5,9 +5,9 @@ using IUpdateable = SylviaEngine.Interfaces.IUpdateable;
 
 namespace SylviaEngine;
 
-public class GameObject
+public class GameObject : IDisposable
 {
-    public Guid Id;
+    public Guid Id { get; private set; }
     public Transform Transform { get; private set; }
     public bool Active { get; set; }
     private readonly List<IComponent> _components = new();
@@ -54,5 +54,27 @@ public class GameObject
             if (component.Enabled)
                 component.Update(gameTime);
         }
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+    
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            foreach (var component in _components.ToArray())
+            {
+                component.Destroy();
+            }
+            
+            _components.Clear();
+            _updateables.Clear();
+        }
+        
+        Active = false;
     }
 }

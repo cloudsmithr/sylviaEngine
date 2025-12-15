@@ -52,7 +52,6 @@ public class WindowManager : IWindowManager
         _graphicsDevice.Clear(Color.Black);
         RenderSystem.Instance.RenderAll();
         
-        // Render to the
         _graphicsDevice.SetRenderTarget(null);
         _graphicsDevice.Clear(Color.Black);
 
