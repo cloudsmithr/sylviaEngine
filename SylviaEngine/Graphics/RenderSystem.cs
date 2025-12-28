@@ -71,7 +71,13 @@ public class RenderSystem : IRenderSystem
             CRTEffect.Parameters["WindowResolution"].SetValue(
                 new Vector2(width, height));
             CRTEffect.Parameters["BlurAmount"].SetValue(1.15f);
-            CRTEffect.Parameters["Bloom"].SetValue(0.5f);
+
+            CRTEffect.Parameters["BloomStrength"].SetValue(0.85f);
+            CRTEffect.Parameters["BloomThreshold"].SetValue(0.25f);
+            CRTEffect.Parameters["BloomSoftKnee"].SetValue(0.65f);
+            CRTEffect.Parameters["BloomX"].SetValue(2.5f);
+            CRTEffect.Parameters["BloomY"].SetValue(1f);
+
             CRTEffect.Parameters["ScanlineIntensity"].SetValue(0.45f);
             CRTEffect.Parameters["Brightness"].SetValue(1.6f);
             CRTEffect.Parameters["TriadStrength"].SetValue(0.2f);

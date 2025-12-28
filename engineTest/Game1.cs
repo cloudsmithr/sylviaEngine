@@ -35,8 +35,8 @@ public class Game1 : Core
                 width: 200,
                 maxLines:4)
         );
-        animTest6.Effects.Add(new JitterTextEffect(0.5f));
-        animTest6.Effects.Add(new WaveTextEffect(1f, 1f, 1f));
+        //animTest6.Effects.Add(new JitterTextEffect(0.5f));
+        //animTest6.Effects.Add(new WaveTextEffect(1f, 1f, 1f));
         animTest6.Effects.Add(new TypeWriterTextEffect(0.1f));
         
     }
