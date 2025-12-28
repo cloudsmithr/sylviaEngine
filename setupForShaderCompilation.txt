@@ -1,0 +1,5 @@
+cat > ~/.winemonogame/wine_wrapper.sh << 'EOF'
+#!/bin/bash
+export WINEPREFIX="$HOME/.winemonogame"
+wine "$@"
+EOF

@@ -20,6 +20,24 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/main.spritefont
 
+#begin FX/CRT01.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:FX/CRT01.fx
+
+#begin FX/CRT02.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:FX/CRT02.fx
+
+#begin FX/CRT03_CHAT.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:FX/CRT03_CHAT.fx
+
 #begin Levels/testLevel.json
 /copy:Levels/testLevel.json
 

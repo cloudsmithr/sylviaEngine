@@ -15,6 +15,6 @@ public interface IWindowManager
         int renderHeight = 480,
         bool fullscreen = false,
         int scale = 2);
-    public void DrawWindow();
+    public void DrawWindow(GameTime gameTime);
     public void SetFullscreen(bool fullscreen);
 }

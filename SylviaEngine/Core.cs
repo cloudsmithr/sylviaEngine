@@ -60,7 +60,10 @@ public class Core : Game
         
         Window.Title = _title;
         GraphicsDevice = base.GraphicsDevice;
-
+        
+        Effect crtEffect = Content.Load<Effect>("FX/CRT03_CHAT");
+        RenderSystem.Instance.CRTEffect = crtEffect;
+        
         WindowManager.Instance.Init(
             GraphicsDevice,
             Graphics,

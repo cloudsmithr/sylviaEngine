@@ -30,10 +30,10 @@ public class Game1 : Core
             new FormattedTextRenderer(
                 RenderLayer.UI,
                 font,
-                "In the first age, the sun fell from the sky. \nThe Lord of Demons devoured it, casting the world into darkness. \n Humankind was before the brink of destruction. \nUntil... \n The Hero of Light appeared, to slay the Lord of Demons, and free the land from his reign of darkness.",
+                "In the first age, the sun fell from the sky. \nThe Lord of Demons arose, casting the world into darkness. \n Humankind was before the brink of destruction. \nUntil... \n The Hero of Light appeared, to slay the Lord of Demons, and free the land from his reign of darkness.",
                 Color.Red,
                 width: 200,
-                maxLines:2)
+                maxLines:4)
         );
         animTest6.Effects.Add(new JitterTextEffect(0.5f));
         animTest6.Effects.Add(new WaveTextEffect(1f, 1f, 1f));
@@ -54,7 +54,7 @@ public class Game1 : Core
 
     protected override void Draw(GameTime gameTime)
     {
-        WindowManager.Instance.DrawWindow();
+        WindowManager.Instance.DrawWindow(gameTime);
         base.Draw(gameTime);
     }
 }

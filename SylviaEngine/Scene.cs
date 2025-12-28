@@ -1,6 +1,8 @@
 using System.Text.Json;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using SylviaEngine.Graphics;
 using SylviaEngine.Levels;
 using SylviaEngine.Tilesets;
 using SylviaEngine.Tilesets.Importers.Tiled;
@@ -46,30 +48,13 @@ public class Scene : IDisposable
         // Clear previous level
         UnloadContent();
         
-        // Load level config
-        Level = LoadLevel(levelPath);
-        
-        // Create tilemap GameObject
-        var mapObject = CreateTileMapObject(Level.TileMapPath);
-        AddGameObject(mapObject); // ✅ Don't forget this!
-    }
+        // Load level data
+        LevelLoader levelLoader = new LevelLoader(Content);
+        Level = levelLoader.LoadLevel(levelPath);
     
-    private Level LoadLevel(string levelPath)
-    {
-        string fullPath = Path.Combine(Content.RootDirectory, levelPath);
-        string json = File.ReadAllText(fullPath);
-        return JsonSerializer.Deserialize<Level>(json) 
-            ?? throw new FileLoadException($"Could not load level: {levelPath}");
-    }
-    
-    private GameObject CreateTileMapObject(string tileMapPath)
-    {
-        var importer = new TiledMapImporter();
-        importer.LoadMap(tileMapPath, Content);
-        
-        var mapObject = new GameObject();
-        mapObject.AddComponent(new TileMapRenderer(importer.ImportedMap.ToArray(), 0));
-        return mapObject;
+        // Build all game objects from level data
+        LevelBuilder levelBuilder = new LevelBuilder(this, Content);
+        levelBuilder.BuildLevel(Level);
     }
 
     public virtual void UnloadContent()

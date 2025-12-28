@@ -9,10 +9,13 @@ namespace SylviaEngine.Tilesets.Importers.Tiled;
 public class TiledMapImporter
 {
     public List<TileMap> ImportedMap = new List<TileMap>();
-    public List<GameObject> ImportedObjects = new List<GameObject>();
+    public List<TiledMapObject> ImportedObjects = new List<TiledMapObject>();
     
     public void LoadMap(string mapPath, ContentManager content)
     {
+        ImportedMap.Clear();
+        ImportedObjects.Clear();
+        
         string tiledMapJSON = File.ReadAllText("Content/" + mapPath);
         TiledMap tiledMap = JsonSerializer.Deserialize<TiledMap>(tiledMapJSON) ?? throw new FileLoadException("Could not load TiledMap");
         
@@ -37,6 +40,10 @@ public class TiledMapImporter
             {
                 TileMap tileMap = new TileMap(layer.Width, layer.Height, layer.Data, tileSet);
                 ImportedMap.Add(tileMap);
+            }
+            else if (string.Equals(layer.Type, "objectlayer", StringComparison.OrdinalIgnoreCase))
+            {
+                ImportedObjects.AddRange(layer.Objects);
             }
         }
     }

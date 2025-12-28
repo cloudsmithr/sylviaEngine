@@ -42,7 +42,7 @@ public class WindowManager : IWindowManager
         _initialized = true;
     }
 
-    public void DrawWindow()
+    public void DrawWindow(GameTime gameTime)
     {
         if (!_initialized) throw new InvalidOperationException("WindowManager.Init(...) must be called before DrawWindow.");
         if (_graphicsDevice is null) throw new InvalidOperationException("WindowManager not initialized properly.");
@@ -59,9 +59,14 @@ public class WindowManager : IWindowManager
             RenderSystem.Instance.RenderToWindow(
                 GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, 
                 GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height,
-                Color.White);
+                Color.White,
+                gameTime);
         else
-            RenderSystem.Instance.RenderToWindow(RenderWidth * Scale, RenderHeight * Scale, Color.White);
+            RenderSystem.Instance.RenderToWindow(
+                RenderWidth * Scale,
+                RenderHeight * Scale,
+                Color.White,
+                gameTime);
     }
 
     public void SetFullscreen(bool fullscreen)

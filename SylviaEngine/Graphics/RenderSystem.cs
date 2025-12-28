@@ -16,6 +16,8 @@ public class RenderSystem : IRenderSystem
     public SpriteBatch SpriteBatch { get; set; }
     public RenderTarget2D RenderTarget { get; set; }
     
+    public Effect CRTEffect { get; set; }
+    
     public void Register(RenderComponent r)
     {
         // Note: ZIndex is fixed at registration time. 
@@ -56,9 +58,27 @@ public class RenderSystem : IRenderSystem
         SpriteBatch.End();
     }
 
-    public void RenderToWindow(int width, int height, Color color)
+    public void RenderToWindow(int width, int height, Color color, GameTime gameTime)
     {
-        SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        if (CRTEffect != null)
+        {
+            /*CRTEffect.Parameters["ScreenSize"].SetValue(new  Vector2(width, height));
+            CRTEffect.Parameters["Curvature"].SetValue(0.08f);
+            CRTEffect.Parameters["ScanlineStrength"].SetValue(0.25f);
+            CRTEffect.Parameters["VignetteStrength"].SetValue(1.2f);*/
+            CRTEffect.Parameters["RenderResolution"].SetValue(
+                new Vector2(RenderTarget.Width, RenderTarget.Height));
+            CRTEffect.Parameters["WindowResolution"].SetValue(
+                new Vector2(width, height));
+            CRTEffect.Parameters["BlurAmount"].SetValue(1.15f);
+            CRTEffect.Parameters["Bloom"].SetValue(0.5f);
+            CRTEffect.Parameters["ScanlineIntensity"].SetValue(0.45f);
+            CRTEffect.Parameters["Brightness"].SetValue(1.6f);
+            CRTEffect.Parameters["TriadStrength"].SetValue(0.2f);
+            CRTEffect.Parameters["TriadSize"].SetValue(1.5f);
+        }
+        
+        SpriteBatch.Begin(samplerState: SamplerState.LinearClamp, effect: CRTEffect);
         SpriteBatch.Draw(RenderTarget, new Rectangle(0, 0, width, height), color);
         SpriteBatch.End();
     }
