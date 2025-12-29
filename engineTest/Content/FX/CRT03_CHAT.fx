@@ -63,15 +63,18 @@ float4 MainPS(float2 texCoord : TEXCOORD0) : COLOR0
     texCoord = saturate(texCoord);
     
     // 5-tap blur (cross)
-    float3 c  = Sample(texCoord) * 0.40;
+    float3 c  = Sample(texCoord) * 1;
+    float lum = dot(c, float3(0.299, 0.587, 0.114));
+    
     c += Sample(texCoord + float2( o.x, 0)) * 0.15;
     c += Sample(texCoord + float2(-o.x, 0)) * 0.15;
-    c += Sample(texCoord + float2(0,  o.y)) * 0.15;
-    c += Sample(texCoord + float2(0, -o.y)) * 0.15;
+    //c += Sample(texCoord + float2( o.x*1.5, 0)) * 0.1;
+    //c += Sample(texCoord + float2(-o.x*1.5, 0)) * 0.1;
+    c += Sample(texCoord + float2(0,  o.y)) * 0.1;
+    c += Sample(texCoord + float2(0, -o.y)) * 0.1;
 
     // Triads
     float3 mask = TriadMask(texCoord, WindowResolution, TriadSize);
-    float lum = dot(c, float3(0.299, 0.587, 0.114));
     float triadFade = saturate(lum * 1.5); // dim areas get less mask
     c = lerp(c, c * mask, TriadStrength * triadFade);
 
