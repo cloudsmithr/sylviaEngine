@@ -1,13 +1,8 @@
-using System.Text.Json;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using SylviaEngine.Graphics;
 using SylviaEngine.Levels;
-using SylviaEngine.Tilesets;
-using SylviaEngine.Tilesets.Importers.Tiled;
 
-namespace SylviaEngine;
+namespace SylviaEngine.Engine;
 
 public class Scene : IDisposable
 {

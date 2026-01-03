@@ -1,3 +1,5 @@
+using SylviaEngine.Engine;
+
 namespace SylviaEngine.Interfaces;
 
 public interface IComponent

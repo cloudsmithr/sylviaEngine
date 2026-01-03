@@ -65,14 +65,43 @@ float4 MainPS(float2 texCoord : TEXCOORD0) : COLOR0
     // 5-tap blur (cross)
     float3 c  = Sample(texCoord) * 1;
     float lum = dot(c, float3(0.299, 0.587, 0.114));
+
+    // 9-tap blur
+    float2 pixelSize = 1.0 / RenderResolution;
+    float3 color = tex2D(TextureSampler, texCoord).rgb * 4.0;
+    color += tex2D(TextureSampler, texCoord + float2(-pixelSize.x, 0) * BlurAmount).rgb * 2.0;
+    color += tex2D(TextureSampler, texCoord + float2(pixelSize.x, 0) * BlurAmount).rgb * 2.0;
+    color += tex2D(TextureSampler, texCoord + float2(0, -pixelSize.y) * BlurAmount).rgb * 2.0;
+    color += tex2D(TextureSampler, texCoord + float2(0, pixelSize.y) * BlurAmount).rgb * 2.0;
+    color += tex2D(TextureSampler, texCoord + float2(-pixelSize.x, -pixelSize.y) * BlurAmount).rgb;
+    color += tex2D(TextureSampler, texCoord + float2(pixelSize.x, -pixelSize.y) * BlurAmount).rgb;
+    color += tex2D(TextureSampler, texCoord + float2(-pixelSize.x, pixelSize.y) * BlurAmount).rgb;
+    color += tex2D(TextureSampler, texCoord + float2(pixelSize.x, pixelSize.y) * BlurAmount).rgb;
+    color /= 16.0;
     
-    c += Sample(texCoord + float2( o.x, 0)) * 0.15;
+    // Second blur pass for extra softness
+    float3 color2 = tex2D(TextureSampler, texCoord).rgb * 4.0;
+    float blur2 = BlurAmount * 2.0;
+    color2 += tex2D(TextureSampler, texCoord + float2(-pixelSize.x, 0) * blur2).rgb * 2.0;
+    color2 += tex2D(TextureSampler, texCoord + float2(pixelSize.x, 0) * blur2).rgb * 2.0;
+    color2 += tex2D(TextureSampler, texCoord + float2(0, -pixelSize.y) * blur2).rgb * 2.0;
+    color2 += tex2D(TextureSampler, texCoord + float2(0, pixelSize.y) * blur2).rgb * 2.0;
+    color2 += tex2D(TextureSampler, texCoord + float2(-pixelSize.x, -pixelSize.y) * blur2).rgb;
+    color2 += tex2D(TextureSampler, texCoord + float2(pixelSize.x, -pixelSize.y) * blur2).rgb;
+    color2 += tex2D(TextureSampler, texCoord + float2(-pixelSize.x, pixelSize.y) * blur2).rgb;
+    color2 += tex2D(TextureSampler, texCoord + float2(pixelSize.x, pixelSize.y) * blur2).rgb;
+    color2 /= 16.0;
+    
+    // Blend the two blur levels
+    c = lerp(color, color2, 0.5);
+    
+  /*  c += Sample(texCoord + float2( o.x, 0)) * 0.15;
     c += Sample(texCoord + float2(-o.x, 0)) * 0.15;
     //c += Sample(texCoord + float2( o.x*1.5, 0)) * 0.1;
     //c += Sample(texCoord + float2(-o.x*1.5, 0)) * 0.1;
     c += Sample(texCoord + float2(0,  o.y)) * 0.1;
     c += Sample(texCoord + float2(0, -o.y)) * 0.1;
-
+*/
     // Triads
     float3 mask = TriadMask(texCoord, WindowResolution, TriadSize);
     float triadFade = saturate(lum * 1.5); // dim areas get less mask

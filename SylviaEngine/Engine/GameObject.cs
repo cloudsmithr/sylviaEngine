@@ -3,7 +3,7 @@ using SylviaEngine.Components;
 using SylviaEngine.Interfaces;
 using IUpdateable = SylviaEngine.Interfaces.IUpdateable;
 
-namespace SylviaEngine;
+namespace SylviaEngine.Engine;
 
 public class GameObject : IDisposable
 {
@@ -34,10 +34,11 @@ public class GameObject : IDisposable
         return component;
     }
     
-    public void RemoveComponent(IComponent c) {
+    public void RemoveComponent(IComponent c)
+    {
         c.Disable();
         _components.Remove(c);
-        
+            
         if (c is IUpdateable updateable)
             _updateables.Remove(updateable);
     }

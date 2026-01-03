@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SylviaEngine.Components;
+using SylviaEngine.Engine;
 using SylviaEngine.Enums;
 
 namespace SylviaEngine.Graphics;
@@ -17,8 +18,7 @@ public class RenderSystem : IRenderSystem
     public RenderTarget2D RenderTarget { get; set; }
     
     public Effect CRTEffect { get; set; }
-
-
+    
     private Texture2D TestSprite;
     
     public void Register(RenderComponent r)
@@ -75,20 +75,20 @@ public class RenderSystem : IRenderSystem
                 new Vector2(RenderTarget.Width, RenderTarget.Height));
             CRTEffect.Parameters["WindowResolution"].SetValue(
                 new Vector2(width, height));
-            CRTEffect.Parameters["BlurAmount"].SetValue(1.15f); // 1.15
+            CRTEffect.Parameters["BlurAmount"].SetValue(0.7f); // 1.15
 
             CRTEffect.Parameters["BloomStrength"].SetValue(0.85f);
-            CRTEffect.Parameters["BloomThreshold"].SetValue(0.15f);
+            CRTEffect.Parameters["BloomThreshold"].SetValue(0.25f);
             CRTEffect.Parameters["BloomSoftKnee"].SetValue(0.65f);
             CRTEffect.Parameters["BloomX"].SetValue(2.5f);
             CRTEffect.Parameters["BloomY"].SetValue(1f);
 
-            CRTEffect.Parameters["ScanlineIntensity"].SetValue(0.45f);
-            CRTEffect.Parameters["Brightness"].SetValue(1f);
+            CRTEffect.Parameters["ScanlineIntensity"].SetValue(0.2f);
+            CRTEffect.Parameters["Brightness"].SetValue(1.1f);
             CRTEffect.Parameters["TriadStrength"].SetValue(0.2f);
             CRTEffect.Parameters["TriadSize"].SetValue(2f);
         }
-        
+        //SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
         SpriteBatch.Begin(samplerState: SamplerState.LinearClamp, effect: CRTEffect);
         SpriteBatch.Draw(RenderTarget, new Rectangle(0, 0, width, height), color);
         SpriteBatch.End();

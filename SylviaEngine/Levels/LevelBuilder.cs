@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using SylviaEngine.Engine;
 using SylviaEngine.Tilesets;
 using SylviaEngine.Tilesets.Importers.Tiled;
 

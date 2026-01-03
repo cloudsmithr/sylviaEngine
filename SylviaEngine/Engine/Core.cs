@@ -3,8 +3,9 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SylviaEngine.Graphics;
 using SylviaEngine.Input;
+using SylviaEngine.UI.Text;
 
-namespace SylviaEngine;
+namespace SylviaEngine.Engine;
 
 public class Core : Game
 {
@@ -18,13 +19,14 @@ public class Core : Game
     
     // Sylvia Engine objects
     public static IInputManager Input { get; private set; }
+    public static GameStateManager States { get; private set; }
+    public static FontManager Fonts { get; private set; }
     
     private string _title;
     private int _width;
     private int _height;
     private bool _fullscreen;
     private int _windowScale;
-
 
     public Core(string title, int width, int height, bool fullscreen, int windowScale = 1)
     {
@@ -60,9 +62,11 @@ public class Core : Game
         
         Window.Title = _title;
         GraphicsDevice = base.GraphicsDevice;
-        
+        Fonts = new FontManager();
         Effect crtEffect = Content.Load<Effect>("FX/CRT03_CHAT");
         RenderSystem.Instance.CRTEffect = crtEffect;
+        
+        States = new GameStateManager();
         
         WindowManager.Instance.Init(
             GraphicsDevice,
